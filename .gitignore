@@ -1,0 +1,10 @@
+.DS_Store
+/target
+/build
+/node_modules
+/coverage
+/instrument
+/test/spec.js
+/test/*.js.map
+*.log
+*.bak
