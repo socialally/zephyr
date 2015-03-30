@@ -174,9 +174,9 @@ An earlier version of the library allowed constructor hooks to be registered to 
     /**
      *  Abstract plugin class.
      */
-    function Zephyr() {}
+    function Component() {}
 
-    proto = opts.proto || Zephyr.prototype;
+    proto = opts.proto || Component.prototype;
 
     /**
      *  Plugin method.
@@ -207,7 +207,7 @@ An earlier version of the library allowed constructor hooks to be registered to 
     var main = opts.main || construct;
 
     // class to construct
-    main.Type = opts.type || Zephyr;
+    main.Type = opts.type || Component;
 
     // static and instance plugin method
     main.plugin = proto.plugin = opts.plugin || plugin;
