@@ -1,1 +1,1 @@
-Plugin class for composable libraries.
+Plugin functionality for modular libraries.

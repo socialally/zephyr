@@ -1,7 +1,7 @@
 ;(function() {
   'use strict'
 
-  var zephyr = require('zephyr')
+  var zephyr = require('zephyr')()
     , Zephyr = zephyr.Type;
 
   /**
@@ -19,7 +19,7 @@
     Zephyr.apply(this, arguments);
   }
 
-  var proto = PluginSystem.prototype = new zephyr.Type();
+  var proto = PluginSystem.prototype = Zephyr.prototype;
 
   /**
    *  A mock fixed method on the plugin sub system.
@@ -32,9 +32,6 @@
 
   // construct PluginSystem instances from main function
   zephyr.Type = PluginSystem;
-
-  // alias main function on instances
-  proto.zephyr = zephyr;
 
   module.exports = zephyr;
 })();

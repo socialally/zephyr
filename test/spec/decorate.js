@@ -1,5 +1,5 @@
 var expect = require('chai').expect
-  , zephyr = require('zephyr');
+  , zephyr = require('zephyr')();
 
 describe('Zephyr:', function() {
 
@@ -9,6 +9,8 @@ describe('Zephyr:', function() {
     var sub = system('foo', 1, false);
     expect(sub).to.be.instanceof(system.Type);
     expect(sub.getArguments()).to.eql(['foo', 1, false]);
+    // event emitter method in inheritance chain
+    expect(sub.on).to.be.a('function');
     done();
   });
 

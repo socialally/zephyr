@@ -1,5 +1,5 @@
 var expect = require('chai').expect
-  , zephyr = require('zephyr');
+  , zephyr = require('zephyr')();
 
 describe('Zephyr:', function() {
 

@@ -65,7 +65,8 @@
         "inc": [
           "introduction.md",
           "install.md",
-          "handbook.md"
+          "usage.md",
+          "plugins.md"
         ]
       },
       {

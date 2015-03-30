@@ -2,7 +2,7 @@
   'use strict'
 
   var EventEmitter = require('emanate')
-    , zephyr = require('zephyr');
+    , pluggable = require('zephyr');
 
   // super class derived from another inheritance hierarchy
   function SuperClass() {
@@ -12,9 +12,10 @@
 
   // add plugin methods to the target prototype
   var proto
-    , Zephyr = zephyr.Type;
+    , Zephyr;
 
-  zephyr = zephyr.pluggable({proto: SuperClass.prototype});
+  zephyr = pluggable({proto: SuperClass.prototype});
+  Zephyr = zephyr.Type;
   proto = zephyr.proto;
 
   /**
@@ -49,9 +50,6 @@
 
   // construct DecorateSystem instances from main function
   zephyr.Type = DecorateSystem;
-
-  // alias main function on instances
-  proto.zephyr = zephyr;
 
   module.exports = zephyr;
 })();
