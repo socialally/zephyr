@@ -3,7 +3,8 @@ var expect = require('chai').expect
 
 describe('Zephyr:', function() {
 
-  it('should have instance methods', function(done) {
+  it('should have methods', function(done) {
+    expect(zephyr.Type).to.be.a('function');
     expect(zephyr.plugin).to.be.a('function');
     var z = zephyr();
     expect(z.plugin).to.be.a('function');
@@ -12,18 +13,18 @@ describe('Zephyr:', function() {
   });
 
   it('should ignore bad hook type', function(done) {
-    zephyr.plugin([require('../fixtures/bad-hook')]);
+    zephyr.plugin([require('../fixture/bad-hook')]);
     done();
   });
 
   it('should add static plugin method', function(done) {
-    zephyr.plugin([require('../fixtures/static')]);
+    zephyr.plugin([require('../fixture/static-plugin')]);
     expect(zephyr.factory).to.be.a('function');
     done();
   });
 
   it('should add prototype method', function(done) {
-    zephyr.plugin([require('../fixtures/prototype')]);
+    zephyr.plugin([require('../fixture/instance-plugin')]);
     var z = zephyr();
     z.callback(done);
   });
@@ -33,7 +34,7 @@ describe('Zephyr:', function() {
       , conf = {foo: 'bar'};
     z.plugin(
       [
-        {plugin: require('../fixtures/config'), conf: conf}
+        {plugin: require('../fixture/config-plugin'), conf: conf}
       ]
     );
     expect(z.config()).to.equal(conf);
@@ -41,7 +42,7 @@ describe('Zephyr:', function() {
   });
 
   it('should add constructor hook', function(done) {
-    zephyr.plugin([require('../fixtures/hook')]);
+    zephyr.plugin([require('../fixture/hook-plugin')]);
     var z = zephyr('foo', 1, true);
     var args = z.getConstructorArgs();
     expect(args[0]).to.eql('foo');
