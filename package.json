@@ -64,7 +64,8 @@
         "inc": [
           "introduction.md",
           "install.md",
-          "developer.md"
+          "developer.md",
+          "license.md"
         ]
       }
     ]
