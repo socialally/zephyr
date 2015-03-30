@@ -167,7 +167,7 @@ An earlier version of the library allowed constructor hooks to be registered to 
 ;(function() {
   'use strict'
 
-  function plugable(opts) {
+  function plug(opts) {
     opts = opts || {};
     var proto;
 
@@ -218,7 +218,7 @@ An earlier version of the library allowed constructor hooks to be registered to 
     return main;
   }
 
-  module.exports = plugable;
+  module.exports = plug;
 })();
 ```
 
