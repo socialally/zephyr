@@ -1,5 +1,5 @@
 ## Install
 
 ```
-npm i zephyr
+npm i zephyr --save
 ```

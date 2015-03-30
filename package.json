@@ -65,7 +65,17 @@
         "inc": [
           "introduction.md",
           "install.md",
-          "handbook.md",
+          "handbook.md"
+        ]
+      },
+      {
+        "title": "Source",
+        "inc": "../../lib/zephyr.js",
+        "type": "code",
+        "language": "javascript"
+      },
+      {
+        "inc": [
           "developer.md",
           "license.md"
         ]
