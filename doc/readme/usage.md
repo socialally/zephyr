@@ -1,9 +1,12 @@
 ## Usage
 
 ```javascript
-var pluggable = require('zephyr')
-  , system = pluggable();
-system.plugin([require('plugin-file')]);
-var component = system();
+var plug = require('zephyr')
+  // create the plugin system
+  , sys = plug();
+// load plugins
+sys.plugin([require('plugin-file')]);
+// create a component
+var component = sys();
 // do something with the plugin functionality
 ```

@@ -39,10 +39,13 @@ npm i zephyr --save
 ## Usage
 
 ```javascript
-var pluggable = require('zephyr')
-  , system = pluggable();
-system.plugin([require('plugin-file')]);
-var component = system();
+var plug = require('zephyr')
+  // create the plugin system
+  , sys = plug();
+// load plugins
+sys.plugin([require('plugin-file')]);
+// create a component
+var component = sys();
 // do something with the plugin functionality
 ```
 
@@ -142,7 +145,7 @@ module.exports = zephyr;
 
 #### Composition
 
-When your plugin class needs to extend another class then you can *decorate* the class prototype using the `pluggable` function to create a plugin system. For example:
+When your plugin class needs to extend another class then you can *decorate* the class prototype using the `plugable` function to create a plugin system. For example:
 
 ```javascript
 var zephyr = require('zephyr')
@@ -154,7 +157,7 @@ var zephyr = require('zephyr')
 function SuperClass() {}
 
 // create a new plugin system passing the prototype to decorate
-zephyr = zephyr.pluggable({proto: SuperClass.prototype});
+zephyr = zephyr.plugable({proto: SuperClass.prototype});
 
 function DecorateSystem() {
   // allow invocation without new (recommended)
@@ -206,34 +209,16 @@ zephyr.plugin(plugins);
 ;(function() {
   'use strict'
 
-  function pluggable(opts) {
+  function plugable(opts) {
     opts = opts || {};
     var proto;
 
     /**
      *  Abstract plugin class.
      */
-    function Zephyr() {
-      // invoke constructor hooks
-      for(var i = 0;i < this.hooks.length;i++) {
-        this.hooks[i].apply(this, arguments);
-      }
-    }
+    function Zephyr() {}
 
     proto = opts.proto || Zephyr.prototype;
-    proto.hooks = [];
-
-    /**
-     *  Register a method to be invoked when the class
-     *  is instantiated.
-     *
-     *  @param hook A function to be invoked on construction.
-     */
-    function register(hook) {
-      if(typeof hook === 'function' && !~proto.hooks.indexOf(hook)) {
-        proto.hooks.push(hook);
-      }
-    }
 
     /**
      *  Plugin method.
@@ -261,29 +246,21 @@ zephyr.plugin(plugins);
       return new (Function.prototype.bind.apply(construct.Type, args));
     }
 
+    var main = opts.main || construct;
+
     // class to construct
-    construct.Type = opts.type || Zephyr;
+    main.Type = opts.type || Zephyr;
 
     // static and instance plugin method
-    construct.plugin = proto.plugin = opts.plugin || plugin;
-
-    // hook register method, available to plugins via *this.register()*
-    proto.register = opts.register || register;
+    main.plugin = proto.plugin = opts.plugin || plugin;
 
     // reference to the main function for static assignment
-    proto.main = construct;
+    proto.main = main;
 
-    // expose the prototype being decorated with plugins
-    construct.proto = proto;
-
-    // reference the main pluggable function, allow for mixed
-    // decorated subsystems
-    construct.pluggable = pluggable;
-
-    return construct;
+    return main;
   }
 
-  module.exports = pluggable;
+  module.exports = plugable;
 })();
 ```
 
