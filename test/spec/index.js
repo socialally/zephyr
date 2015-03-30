@@ -6,8 +6,8 @@ module.exports = {
   static: require('./static-plugin'),
   group: require('./group-plugin'),
   config: require('./config-plugin'),
-  hook: require('./hook-plugin'),
-  error: require('./error'),
+  //hook: require('./hook-plugin'),
+  //error: require('./error'),
   subsystem: require('./subsystem'),
   decorate: require('./decorate'),
 }

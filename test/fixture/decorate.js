@@ -10,14 +10,6 @@
   }
   SuperClass.prototype = new EventEmitter();
 
-  // add plugin methods to the target prototype
-  var proto
-    , Zephyr;
-
-  zephyr = pluggable({proto: SuperClass.prototype});
-  Zephyr = zephyr.Type;
-  proto = zephyr.proto;
-
   /**
    *  Mock subclass implementation that derives from another class and
    *  decorates the prototype with plugin methods.
@@ -31,13 +23,14 @@
 
     // store arguments for assertions
     this.args = Array.prototype.slice.call(arguments);
-
-    // call plugin super class for constructor hooks
-    Zephyr.apply(this, arguments);
   }
 
   // derive from superclass
   DecorateSystem.prototype = SuperClass.prototype;
+
+  // add plugin methods to the target prototype
+  var proto = SuperClass.prototype
+    , zephyr = pluggable({proto: proto, type: DecorateSystem});
 
   /**
    *  A mock fixed method on the plugin sub system.
@@ -47,9 +40,6 @@
   }
 
   proto.getArguments = getArguments;
-
-  // construct DecorateSystem instances from main function
-  zephyr.Type = DecorateSystem;
 
   module.exports = zephyr;
 })();
