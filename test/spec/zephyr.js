@@ -16,6 +16,12 @@ describe('Zephyr:', function() {
     done();
   });
 
+  it('should add static plugin method', function(done) {
+    zephyr.plugin([require('../fixtures/static')]);
+    expect(zephyr.factory).to.be.a('function');
+    done();
+  });
+
   it('should add prototype method', function(done) {
     zephyr.plugin([require('../fixtures/prototype')]);
     var z = zephyr();
