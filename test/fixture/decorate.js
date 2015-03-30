@@ -10,10 +10,12 @@
   }
   SuperClass.prototype = new EventEmitter();
 
-
   // add plugin methods to the target prototype
-  var proto = zephyr.extend(SuperClass)
+  var proto
     , Zephyr = zephyr.Type;
+
+  zephyr = zephyr.pluggable({proto: SuperClass.prototype});
+  proto = zephyr.proto;
 
   /**
    *  Mock subclass implementation that derives from another class and
