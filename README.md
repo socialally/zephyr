@@ -196,7 +196,7 @@ An earlier version of the library allowed constructor hooks to be registered to 
     }
 
     /**
-     *  Create an instance of the class represented by *main* and proxy
+     *  Create an instance of the class represented by *Type* and proxy
      *  all arguments to the constructor.
      */
     function construct() {
