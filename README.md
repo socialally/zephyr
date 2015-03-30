@@ -4,15 +4,15 @@ Table of Contents
 * [Zephyr](#zephyr)
   * [Install](#install)
   * [Usage](#usage)
+  * [Options](#options)
   * [Plugins](#plugins)
     * [Creating Plugins](#creating-plugins)
       * [Static Plugins](#static-plugins)
       * [Instance Plugins](#instance-plugins)
       * [Composite Plugins](#composite-plugins)
-      * [Systems](#systems)
-        * [Inheritance](#inheritance)
-      * [Composition](#composition)
     * [Loading Plugins](#loading-plugins)
+    * [Systems](#systems)
+    * [Hooks](#hooks)
   * [Source](#source)
   * [Developer](#developer)
     * [Test](#test)
@@ -41,13 +41,20 @@ npm i zephyr --save
 ```javascript
 var plug = require('zephyr')
   // create the plugin system
-  , sys = plug();
+  , sys = plug({});
 // load plugins
 sys.plugin([require('plugin-file')]);
 // create a component
 var component = sys();
 // do something with the plugin functionality
 ```
+
+## Options
+
+* `proto`: A reference to the prototype object.
+* `type`: A reference to the class to instantiate.
+* `main`: An alternative main function (factory).
+* `plugin`: Override the default plugin function.
 
 ## Plugins
 
@@ -110,74 +117,6 @@ module.exports = function() {
 
 By convention plugins are singular and plugin groups are plural.
 
-#### Systems
-
-You may wish to extend the default class or extend another class and decorate a prototype object with plugin methods to provide base functionality for your custom plugin system.
-
-##### Inheritance
-
-To inherit directly you can extend the prototype of the `Type` class and then update `Type` to point to the subclass. For example:
-
-```javascript
-var zephyr = require('zephyr')
-  // reference the super class
-  , Zephyr = zephyr.Type;
-
-// subclass constructor
-function PluginSystem() {
-  // allow invocation without new (recommended)
-  if(!(this instanceof PluginSystem)) {
-    return new PluginSystem();
-  }
-  // call constructor hooks (optional)
-  Zephyr.apply(this, arguments);
-}
-
-// extend the prototype of the default super class
-PluginSystem.prototype = Zephyr.prototype;
-
-// update Type to point to the new constructor
-zephyr.Type = PluginSystem;
-
-// export the plugin system
-module.exports = zephyr;
-```
-
-#### Composition
-
-When your plugin class needs to extend another class then you can *decorate* the class prototype using the `plugable` function to create a plugin system. For example:
-
-```javascript
-var zephyr = require('zephyr')
-  // reference the default super class for
-  // optional constructor hooks
-  , Zephyr = zephyr.Type;
-
-// super class (possibly derived from another inheritance hierarchy)
-function SuperClass() {}
-
-// create a new plugin system passing the prototype to decorate
-zephyr = zephyr.plugable({proto: SuperClass.prototype});
-
-function DecorateSystem() {
-  // allow invocation without new (recommended)
-  if(!(this instanceof DecorateSystem)) {
-    return new DecorateSystem();
-  }
-  SuperClass.apply(this, arguments);
-  // call constructor hooks (optional)
-  Zephyr.apply(this, arguments);
-}
-
-// extend the prototype of the alternative super class
-DecorateSystem.prototype = SuperClass.prototype;
-
-// update Type to point to the new constructor
-zephyr.Type = DecorateSystem;
-
-module.exports = zephyr;
-```
-
 ### Loading Plugins
 
 To load plugin(s) call the `plugin` function passing an array of plugin functions:
@@ -202,6 +141,25 @@ var plugins = [
 ];
 zephyr.plugin(plugins);
 ```
+
+### Systems
+
+Pass the `proto` and `type` options to create a custom plugin system:
+
+```javascript
+var plug = require('zephyr');
+
+// custom constructor
+function PluginSystem() {}
+
+var proto = PluginSystem.prototype
+  , sys = plug({proto: proto, type: PluginSystem});
+module.exports = sys;
+```
+
+### Hooks
+
+An earlier version of the library allowed constructor hooks to be registered to allow access to instantiation (instance scope) however this functionality is better implemented in any derived plugin system and has been removed.
 
 ## Source
 
