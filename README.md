@@ -174,7 +174,7 @@ module.exports = function plugin(conf) {
 
 Then a consumer of the plugin system could enable the extended logic:
 
-```
+```javascript
 sys.plugin({plugin: require('conf-plugin-file'), conf: {ext: true}})
 ```
 
