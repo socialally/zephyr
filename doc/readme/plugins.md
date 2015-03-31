@@ -117,22 +117,7 @@ Then a consumer of the plugin system could enable the extended logic:
 sys.plugin({plugin: require('conf-plugin-file'), conf: {ext: true}})
 ```
 
-### Systems
-
-Pass the `proto` and `type` options to create a custom plugin system:
-
-```javascript
-var plug = require('zephyr');
-
-// custom constructor
-function PluginSystem() {}
-
-var proto = PluginSystem.prototype
-  , sys = plug({proto: proto, type: PluginSystem});
-module.exports = sys;
-```
-
-### Hooks
+#### Hooks
 
 For some plugin systems it is useful to be able to add functionality in the scope of the component instance rather than the prototype. For example to add a default listener for an event, set properties on the instance or start running logic on component creation (or based on the plugin configuration).
 
@@ -165,4 +150,33 @@ sys.plugin([require('plugin-with-hook')]);
 var comp = sys();
 // bypass constructor hooks, probably not desirable
 comp = new sys.Type();
+```
+
+#### Systems
+
+A plugin system is the result of invoking the `zephyr` function:
+
+```javascript
+var plug = require('zephyr')
+  , sys = plug();
+module.exports = sys;
+```
+
+Which allows the ability to mix multiple components using plugins in the same code base. Typically you would export the main function returned as the plugin system.
+
+##### Extend
+
+Pass the `proto` and `type` options to extend the plugin system:
+
+```javascript
+var plug = require('zephyr');
+
+// custom constructor
+function PluginSystem() {}
+
+var proto = PluginSystem.prototype
+// extend the prototype with base functionality
+// available to all plugins
+var sys = plug({proto: proto, type: PluginSystem});
+module.exports = sys;
 ```
