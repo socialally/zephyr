@@ -180,3 +180,5 @@ var proto = PluginSystem.prototype
 var sys = plug({proto: proto, type: PluginSystem});
 module.exports = sys;
 ```
+
+For an example implementation see [air.js][].
