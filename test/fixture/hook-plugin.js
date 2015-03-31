@@ -21,5 +21,5 @@ function hook() {
  */
 module.exports = function plugin() {
   // register the constructor hook
-  this.register(hook);
+  this.plugin.register(hook);
 }
