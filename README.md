@@ -266,14 +266,17 @@ module.exports = function plugin() {
      */
     function hook() {
       var comp = hook.proxy.apply(null, arguments);
-      // apply hooks in scope of the component
-      // after instantiation
       for(var i = 0;i < hooks.length;i++) {
         hooks[i].apply(comp, arguments);
       }
       return comp;
     }
 
+    /**
+     *  Register a constructor hook function.
+     *
+     *  @param fn The constructor hook.
+     */
     function register(fn) {
       if(typeof fn === 'function' && !~hooks.indexOf(fn)) {
         hooks.push(fn);
@@ -282,7 +285,8 @@ module.exports = function plugin() {
 
     main = opts.main || construct;
 
-    if(hooks) {
+    // hooks enabled, wrap main function aop style
+    if(Array.isArray(hooks)) {
       hook.proxy = main;
       main = hook;
     }
@@ -293,7 +297,7 @@ module.exports = function plugin() {
     // static and instance plugin method
     main.plugin = proto.plugin = opts.plugin || plugin;
 
-    // constructor hook register
+    // hooks enabled, decorate with register function
     if(Array.isArray(hooks)) {
       main.plugin.register = register;
     }
