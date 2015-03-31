@@ -138,14 +138,14 @@ For some plugin systems it is useful to be able to add functionality in the scop
 
 Pass an array as the `hooks` option:
 
-```
+```javascript
 var plug = require('zephyr')
   , sys = plug({hooks: []});
 ```
 
 And an additional `register` method is available on `plugin`:
 
-```
+```javascript
 function hook() {
   // do something on component instantiation
 }
@@ -153,4 +153,16 @@ module.exports = function plugin() {
   // register the constructor hook
   this.plugin.register(hook);
 }
+```
+
+Note that hooks are only applied when the component is created with the main function:
+
+```javascript
+var plug = require('zephyr')
+  , sys = plug({hooks: []});
+sys.plugin([require('plugin-with-hook')]);
+// constructor hooks are applied
+var comp = sys();
+// bypass constructor hooks, probably not desirable
+comp = new sys.Type();
 ```
