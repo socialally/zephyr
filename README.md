@@ -11,6 +11,7 @@ Table of Contents
       * [Instance Plugins](#instance-plugins)
       * [Static Plugins](#static-plugins)
       * [Composite Plugins](#composite-plugins)
+      * [Configuration](#configuration)
     * [Systems](#systems)
     * [Hooks](#hooks)
   * [Source](#source)
@@ -55,6 +56,7 @@ var component = sys();
 * `type`: A reference to the class to instantiate.
 * `main`: An alternative main function (factory).
 * `plugin`: Override the default plugin function.
+* `hooks`: Array of functions invoked as constructor hooks.
 
 ## Plugins
 
@@ -155,6 +157,26 @@ module.exports = function plugin() {
 
 By convention plugins are singular and plugin groups are plural.
 
+#### Configuration
+
+Plugins accept a single argument which is a configuration object optionally passed when loading the plugin. Useful when a plugin wishes to add functionality conditionally. For example:
+
+```javascript
+module.exports = function plugin(conf) {
+  conf = conf || {};
+  // implement default logic
+  if(conf.ext) {
+    // implement extended logic
+  }
+}
+```
+
+Then a consumer of the plugin system could enable the extended logic:
+
+```
+sys.plugin({plugin: require('conf-plugin-file'), conf: {ext: true}})
+```
+
 ### Systems
 
 Pass the `proto` and `type` options to create a custom plugin system:
@@ -172,7 +194,26 @@ module.exports = sys;
 
 ### Hooks
 
-An earlier version of the library allowed constructor hooks to be registered to allow access to instantiation (instance scope) however this functionality is better implemented in any derived plugin system and has been removed.
+For some plugin systems it is useful to be able to add functionality in the scope of the component instance rather than the prototype. For example to add a default listener for an event, set properties on the instance or start running logic on component creation (or based on the plugin configuration).
+
+Pass an array as the `hooks` option:
+
+```
+var plug = require('zephyr')
+  , sys = plug({hooks: []});
+```
+
+And an additional `register` method is available on `plugin`:
+
+```
+function hook() {
+  // do something on component instantiation
+}
+module.exports = function plugin() {
+  // register the constructor hook
+  this.plugin.register(hook);
+}
+```
 
 ## Source
 
@@ -186,9 +227,10 @@ An earlier version of the library allowed constructor hooks to be registered to 
     /**
      *  Default plugin class.
      */
-    function Component() {}
+    function Component(){}
 
     var main
+      , hooks = opts.hooks
       , proto = opts.proto || Component.prototype;
 
     /**
@@ -214,16 +256,47 @@ An earlier version of the library allowed constructor hooks to be registered to 
      */
     function construct() {
       var args = [null].concat(Array.prototype.slice.call(arguments));
-      return new (Function.prototype.bind.apply(construct.Type, args));
+      return new (Function.prototype.bind.apply(main.Type, args));
+    }
+
+    /**
+     *  Invoke constructor hooks by proxying to the main construct
+     *  function and invoking registered hook functions in the scope
+     *  of the created component.
+     */
+    function hook() {
+      var comp = hook.proxy.apply(null, arguments);
+      // apply hooks in scope of the component
+      // after instantiation
+      for(var i = 0;i < hooks.length;i++) {
+        hooks[i].apply(comp, arguments);
+      }
+      return comp;
+    }
+
+    function register(fn) {
+      if(typeof fn === 'function' && !~hooks.indexOf(fn)) {
+        hooks.push(fn);
+      }
     }
 
     main = opts.main || construct;
+
+    if(hooks) {
+      hook.proxy = main;
+      main = hook;
+    }
 
     // class to construct
     main.Type = opts.type || Component;
 
     // static and instance plugin method
     main.plugin = proto.plugin = opts.plugin || plugin;
+
+    // constructor hook register
+    if(Array.isArray(hooks)) {
+      main.plugin.register = register;
+    }
 
     // reference to the main function for static assignment
     proto.main = main;

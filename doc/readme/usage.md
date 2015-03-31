@@ -17,3 +17,4 @@ var component = sys();
 * `type`: A reference to the class to instantiate.
 * `main`: An alternative main function (factory).
 * `plugin`: Override the default plugin function.
+* `hooks`: Array of functions invoked as constructor hooks.

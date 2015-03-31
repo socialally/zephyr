@@ -97,6 +97,26 @@ module.exports = function plugin() {
 
 By convention plugins are singular and plugin groups are plural.
 
+#### Configuration
+
+Plugins accept a single argument which is a configuration object optionally passed when loading the plugin. Useful when a plugin wishes to add functionality conditionally. For example:
+
+```javascript
+module.exports = function plugin(conf) {
+  conf = conf || {};
+  // implement default logic
+  if(conf.ext) {
+    // implement extended logic
+  }
+}
+```
+
+Then a consumer of the plugin system could enable the extended logic:
+
+```
+sys.plugin({plugin: require('conf-plugin-file'), conf: {ext: true}})
+```
+
 ### Systems
 
 Pass the `proto` and `type` options to create a custom plugin system:
@@ -114,4 +134,23 @@ module.exports = sys;
 
 ### Hooks
 
-An earlier version of the library allowed constructor hooks to be registered to allow access to instantiation (instance scope) however this functionality is better implemented in any derived plugin system and has been removed.
+For some plugin systems it is useful to be able to add functionality in the scope of the component instance rather than the prototype. For example to add a default listener for an event, set properties on the instance or start running logic on component creation (or based on the plugin configuration).
+
+Pass an array as the `hooks` option:
+
+```
+var plug = require('zephyr')
+  , sys = plug({hooks: []});
+```
+
+And an additional `register` method is available on `plugin`:
+
+```
+function hook() {
+  // do something on component instantiation
+}
+module.exports = function plugin() {
+  // register the constructor hook
+  this.plugin.register(hook);
+}
+```
