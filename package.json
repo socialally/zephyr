@@ -1,6 +1,6 @@
 {
   "name": "zephyr",
-  "version": "1.2.8",
+  "version": "1.2.7",
   "description": "Plugin facade",
   "stability": "stable",
   "author": "muji <noop@xpm.io>",
@@ -63,7 +63,7 @@
     "partial": [
       {
         "ref": "stability",
-        "format": "> Stability: ```%s```"
+        "format": "> Stability: `%s`"
       },
       {
         "inc": [
