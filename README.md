@@ -30,6 +30,8 @@ Table of Contents
 Zephyr
 ======
 
+> Stability: `stable`.
+
 Plugin functionality for modular libraries.
 
 For an implementation using this module see [air](https://github.com/socialally/air).
@@ -270,24 +272,40 @@ For an example implementation see [air.js](https://github.com/socialally/air/blo
      *  @param plugins Array of plugin functions.
      */
     function plugin(plugins) {
-      var z;
+      var z, method, conf;
       for(z in plugins) {
         if(typeof plugins[z] === 'function') {
-          plugins[z].call(proto);
-        // assume object style declaration
+          method = plugins[z];
         }else{
-          plugins[z].plugin.call(proto, plugins[z].conf);
+          method = plugins[z].plugin;
+          conf = plugins[z].conf;
         }
+        if(opts.field && typeof method[opts.field] === 'function') {
+          method = method[opts.field];
+        }
+        method.call(proto, conf);
       }
+      return main;
     }
 
     /**
      *  Create an instance of the class represented by *Type* and proxy
      *  all arguments to the constructor.
      */
+    //function construct() {
+      //var args = [null].concat(Array.prototype.slice.call(arguments));
+      //return new (Function.prototype.bind.apply(main.Type, args));
+    //}
+
+    // SEE: http://stackoverflow.com/questions/1606797/ \
+    //      use-of-apply-with-new-operator-is-this-possible
     function construct() {
-      var args = [null].concat(Array.prototype.slice.call(arguments));
-      return new (Function.prototype.bind.apply(main.Type, args));
+      var args = Array.prototype.slice.call(arguments);
+      function fn() {
+        return main.Type.apply(this, args);
+      }
+      fn.prototype = main.Type.prototype;
+      return new fn();
     }
 
     /**

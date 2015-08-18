@@ -2,6 +2,7 @@
   "name": "zephyr",
   "version": "1.2.7",
   "description": "Plugin facade",
+  "stability": "stable",
   "author": "muji <noop@xpm.io>",
   "repository": {
     "type": "git",
@@ -60,6 +61,10 @@
     "toc": "Table of Contents",
     "base": "https://github.com/socialally/zephyr",
     "partial": [
+      {
+        "ref": "stability",
+        "format": "> Stability: ```%s```"
+      },
       {
         "inc": [
           "introduction.md",
