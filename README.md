@@ -30,7 +30,7 @@ Table of Contents
 Zephyr
 ======
 
-> Stability: `stable`.
+> `Stability: stable`.
 
 Plugin functionality for modular libraries.
 

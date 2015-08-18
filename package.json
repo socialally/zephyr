@@ -63,7 +63,7 @@
     "partial": [
       {
         "ref": "stability",
-        "format": "> Stability: `%s`"
+        "format": "> `Stability: %s`"
       },
       {
         "inc": [
