@@ -38,9 +38,6 @@
     "watchify": "socialally/watchify",
     "xdr": "~0.4.2"
   },
-  "engine": [
-    "node >= 0.10.11"
-  ],
   "scripts": {
     "docs": "npm run readme",
     "readme": "mdp --force -v",
