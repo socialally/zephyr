@@ -10,7 +10,6 @@
   },
   "main": "lib/zephyr.js",
   "devDependencies": {
-    "brfs": "~1.4.0",
     "browser-sync": "~2.4.0",
     "browserify": "~9.0.3",
     "chai": "~2.1.0",
@@ -35,7 +34,6 @@
     "run-sequence": "~1.0.2",
     "vinyl-buffer": "~1.0.0",
     "vinyl-source-stream": "~1.0.0",
-    "watchify": "socialally/watchify",
     "xdr": "~0.5.0"
   },
   "scripts": {
