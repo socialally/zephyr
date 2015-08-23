@@ -10,11 +10,6 @@
     <div id="mocha"></div>
     <script src="../node_modules/mocha/mocha.js"></script>
     <script>
-
-      window.host = 'http://localhost';
-      window.port = 10001;
-      // window.ns = '/social-ally/test/echo';
-
       mocha.setup({
         ui: 'bdd',
         globals: ['___browserSync___*', 'io*', '__jsonp__*'],
