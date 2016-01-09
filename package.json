@@ -13,6 +13,7 @@
     "browser-sync": "~2.4.0",
     "browserify": "~9.0.3",
     "chai": "~2.1.0",
+    "coveralls": "~2.11.6",
     "del": "~1.1.1",
     "emanate": "~1.2.1",
     "es5-shim": "~4.1.0",
