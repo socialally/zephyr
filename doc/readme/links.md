@@ -4,7 +4,6 @@
 [phantomjs]: http://phantomjs.org
 [browserify]: http://browserify.org
 [eslint]: http://eslint.org
-[sa-test]: https://github.com/socialally/sa-test
 [mdp]: https://github.com/freeformsystems/mdp
 [air]: https://github.com/socialally/air
 [air.js]: https://github.com/socialally/air/blob/master/lib/air.js
