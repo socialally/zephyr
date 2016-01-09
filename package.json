@@ -44,6 +44,7 @@
     "spec": "gulp spec",
     "instrument": "istanbul instrument --output instrument lib",
     "cover": "npm run instrument && gulp cover",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test": "gulp test"
   },
   "mdp": {
