@@ -32,7 +32,7 @@ Zephyr
 
 [<img src="https://travis-ci.org/tmpfs/zephyr.svg" alt="Build Status">](https://travis-ci.org/tmpfs/zephyr)
 [<img src="http://img.shields.io/npm/v/zephyr.svg" alt="npm version">](https://npmjs.org/package/zephyr)
-[<img src="https://coveralls.io/repos/tmpfs/zephyr/badge.svg?branch=master&service=github&v=1" alt="Coverage Status">](https://coveralls.io/github/tmpfs/zephyr?branch=master).
+[<img src="https://coveralls.io/repos/tmpfs/zephyr/badge.svg?branch=master&service=github&v=2" alt="Coverage Status">](https://coveralls.io/github/tmpfs/zephyr?branch=master).
 
 Plugin functionality for modular libraries.
 
