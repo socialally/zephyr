@@ -6,7 +6,7 @@
   "author": "muji <noop@xpm.io>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/socialally/zephyr.git"
+    "url": "git://github.com/tempfs/zephyr.git"
   },
   "main": "lib/zephyr.js",
   "devDependencies": {
@@ -54,7 +54,7 @@
     "require": "lib",
     "links": "links.md",
     "toc": "Table of Contents",
-    "base": "https://github.com/socialally/zephyr",
+    "base": "https://github.com/tempfs/zephyr",
     "partial": [
       {
         "ref": "stability",
@@ -81,6 +81,5 @@
         ]
       }
     ]
-  },
-  "dependencies": []
+  }
 }
