@@ -30,8 +30,6 @@ Table of Contents
 Zephyr
 ======
 
-> `Stability: stable`.
-
 Plugin functionality for modular libraries.
 
 For an implementation using this module see [air](https://github.com/socialally/air).
