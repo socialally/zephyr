@@ -32,7 +32,7 @@ Zephyr
 
 [<img src="https://travis-ci.org/tmpfs/zephyr.svg" alt="Build Status">](https://travis-ci.org/tmpfs/zephyr)
 [<img src="http://img.shields.io/npm/v/zephyr.svg" alt="npm version">](https://npmjs.org/package/zephyr)
-[<img src="https://coveralls.io/repos/tmpfs/zephyr/badge.svg?branch=master&service=github&v=2" alt="Coverage Status">](https://coveralls.io/github/tmpfs/zephyr?branch=master).
+[<img src="https://coveralls.io/repos/tmpfs/zephyr/badge.svg?branch=master&service=github&v=3" alt="Coverage Status">](https://coveralls.io/github/tmpfs/zephyr?branch=master).
 
 Plugin functionality for modular libraries.
 
@@ -294,20 +294,13 @@ For an example implementation see [air.js](https://github.com/tmpfs/air/blob/mas
      *  Create an instance of the class represented by *Type* and proxy
      *  all arguments to the constructor.
      */
-    //function construct() {
-      //var args = [null].concat(Array.prototype.slice.call(arguments));
-      //return new (Function.prototype.bind.apply(main.Type, args));
-    //}
-
-    // SEE: http://stackoverflow.com/questions/1606797/ \
-    //      use-of-apply-with-new-operator-is-this-possible
     function construct() {
       var args = Array.prototype.slice.call(arguments);
-      function fn() {
+      function Fn() {
         return main.Type.apply(this, args);
       }
-      fn.prototype = main.Type.prototype;
-      return new fn();
+      Fn.prototype = main.Type.prototype;
+      return new Fn();
     }
 
     /**
