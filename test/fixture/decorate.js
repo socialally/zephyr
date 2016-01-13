@@ -36,6 +36,7 @@
    *  A mock fixed method on the plugin sub system.
    */
   function getArguments() {
+    /* jshint validthis:true */
     return this.args;
   }
 

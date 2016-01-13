@@ -1,4 +1,4 @@
-var shim = require('es5-shim');
+require('es5-shim');
 
 module.exports = {
   core: require('./core'),
@@ -9,5 +9,5 @@ module.exports = {
   hook: require('./hook-plugin'),
   config: require('./config-plugin'),
   subsystem: require('./subsystem'),
-  decorate: require('./decorate'),
+  decorate: require('./decorate')
 }
