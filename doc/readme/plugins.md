@@ -97,6 +97,36 @@ module.exports = function plugin() {
 
 By convention plugins are singular and plugin groups are plural.
 
+#### Named Plugin
+
+Typically a plugin will be a single module (file) and the plugin function is exported, however sometimes you may prefer to export a class or other function; in this case the plugin initialization function may be assigned to the exported object and referenced using the `field` option.
+
+Consider a module that exports a class but also wishes to expose a plugin function:
+
+```javascript
+function Component(){}
+
+Component.init = function() {
+  // implement plugin functionality
+}
+
+module.exports = Component;
+```
+
+We can then configure the plugin system by specifying the `field` option with the name of the function, in this case `init`:
+
+```javascript
+var zephyr = require('zephyr')
+  , main = zephyr({field: 'init'});
+module.exports = main;
+```
+
+Then we can require the file when loading the plugin and the `init` function will be invoked for plugin initialization:
+
+```javascript
+main.plugin([require('./component-module')]);
+```
+
 #### Configuration
 
 Plugins accept a single argument which is a configuration object optionally passed when loading the plugin. Useful when a plugin wishes to add functionality conditionally. For example:

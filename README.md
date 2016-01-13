@@ -11,6 +11,7 @@ Table of Contents
       * [Instance Plugins](#instance-plugins)
       * [Static Plugins](#static-plugins)
       * [Composite Plugins](#composite-plugins)
+      * [Named Plugin](#named-plugin)
       * [Configuration](#configuration)
       * [Hooks](#hooks)
       * [Systems](#systems)
@@ -64,6 +65,7 @@ var component = sys();
 * `main`: An alternative main function (factory).
 * `plugin`: Override the default plugin function.
 * `hooks`: Array of functions invoked as constructor hooks.
+* `field`: String name of field for plugin function.
 
 ## Plugins
 
@@ -163,6 +165,36 @@ module.exports = function plugin() {
 ```
 
 By convention plugins are singular and plugin groups are plural.
+
+#### Named Plugin
+
+Typically a plugin will be a single module (file) and the plugin function is exported, however sometimes you may prefer to export a class or other function; in this case the plugin initialization function may be assigned to the exported object and referenced using the `field` option.
+
+Consider a module that exports a class but also wishes to expose a plugin function:
+
+```javascript
+function Component(){}
+
+Component.init = function() {
+  // implement plugin functionality
+}
+
+module.exports = Component;
+```
+
+We can then configure the plugin system by specifying the `field` option with the name of the function, in this case `init`:
+
+```javascript
+var zephyr = require('zephyr')
+  , main = zephyr({field: 'init'});
+module.exports = main;
+```
+
+Then we can require the file when loading the plugin and the `init` function will be invoked for plugin initialization:
+
+```javascript
+main.plugin([require('./component-module')]);
+```
 
 #### Configuration
 

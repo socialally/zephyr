@@ -18,3 +18,4 @@ var component = sys();
 * `main`: An alternative main function (factory).
 * `plugin`: Override the default plugin function.
 * `hooks`: Array of functions invoked as constructor hooks.
+* `field`: String name of field for plugin function.
