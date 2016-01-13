@@ -6,7 +6,7 @@
 /test
 /doc/readme
 /gulpfile.*
-/gulp
+/run
 /test/spec.js
 *.js.map
 *.log
