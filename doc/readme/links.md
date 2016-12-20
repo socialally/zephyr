@@ -4,5 +4,5 @@
 [phantomjs]: http://phantomjs.org
 [eslint]: http://eslint.org
 [mdp]: https://github.com/tmpfs/mdp
-[air]: https://github.com/tmpfs/air
-[air.js]: https://github.com/tmpfs/air/blob/master/lib/air.js
+[air]: https://github.com/socialally/air
+[air.js]: https://github.com/socialally/air/blob/master/lib/air.js
