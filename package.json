@@ -1,6 +1,6 @@
 {
   "name": "zephyr",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "Plugin facade",
   "author": "muji <noop@xpm.io>",
   "license": "MIT",
