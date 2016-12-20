@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/tmpfs/zephyr.git"
+    "url": "git://github.com/socialally/zephyr.git"
   },
   "main": "lib/zephyr.js",
   "devDependencies": {
@@ -53,7 +53,7 @@
     "require": "lib",
     "links": "links.md",
     "toc": "Table of Contents",
-    "base": "https://github.com/tmpfs/zephyr",
+    "base": "https://github.com/socialally/zephyr",
     "partial": [
       {
         "inc": [
